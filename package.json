@@ -1,0 +1,22 @@
+{
+  "name": "kat-mas",
+  "version": "1.0.0",
+  "description": "Kaya Application Mobile Development server",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git remote add origin https://github.com/oolushola/kat-mas.git"
+  },
+  "keywords": [
+    "Backend",
+    "Notifications",
+    "Mobile",
+    "development",
+    "authentication"
+  ],
+  "author": "Olushola O",
+  "license": "MIT"
+}
