@@ -53,4 +53,28 @@ router.post(
   userController.signUp
 )
 
+router.post(
+  '/login',
+  [
+    body('email')
+    .not()
+    .isEmpty()
+    .isEmail()
+    .custom((value, { req }) => {
+      return userModel.findOne({ email: value })
+        .then(result => {
+          if(!result) {
+            return Promise.reject('email does not exist')          
+          }
+          req.user = result
+        })
+    })
+    .normalizeEmail(),
+    body('password')
+      .notEmpty()
+      .trim()
+  ],
+  userController.login
+)
+
 module.exports = router
