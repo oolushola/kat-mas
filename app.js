@@ -11,6 +11,8 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/public/users', express.static(path.join(__dirname, 'public/users')))
+app.use(express.static(path.join(__dirname, 'public/images')))
+app.use(express.static(path.join(__dirname, 'public/users')))
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
