@@ -35,7 +35,9 @@ const userSchema = new Schema({
     lastName: { type: String },
     email: { type: String },
     phoneNo: [],
-    address: { type: String }
+    address: { type: String },
+    occupation: { type: String },
+    workAddress: { type: String }
   },
   nextOfKin: {
     firstName: { type: String },
@@ -43,14 +45,11 @@ const userSchema = new Schema({
     email: { type: String },
     phoneNo: [],
     address: { type: String },
-    occupation: { type: String },
-    workAddress: { type: String },
-
   },
   userType: {
-    type: Number,
-    enum:[1, 2, 3],
-    default: 1
+    type: String,
+    enum:["customer", "transporter", "business"],
+    required: true
   },
   documents: {
     nin: { type: String },
