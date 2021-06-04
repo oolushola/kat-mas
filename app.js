@@ -3,8 +3,7 @@ const bodyParser = require('body-parser')
 const routes = require('./routes/routes')
 const mongoose = require('mongoose')
 const path = require('path')
-const dotenv = require('dotenv')
-dotenv.config()
+const dotenv = require('dotenv').config()
 
 const app = express()
 
@@ -28,7 +27,6 @@ app.use('*', (req, res, next) => {
     response: 'resource not found'
   })
 })
-
 
 mongoose.connect(process.env.CONNECTION_STRING, {
   useNewUrlParser: true,

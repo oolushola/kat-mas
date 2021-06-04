@@ -1,4 +1,5 @@
 const { body } = require('express-validator')
+const userModel = require('../../models/user')
 
 exports.GUARANTOR = [
   body('firstName')
@@ -64,6 +65,22 @@ exports.NEXT_OF_KIN = [
     .trim()
     .optional(),
   body('address')
+    .notEmpty()
+    .isString()
+    .trim()
+    .toLowerCase(),
+]
+
+exports.ACCOUNT_DETAILS = [
+  body('sameAsName')
+    .isBoolean()
+    .notEmpty(),
+  body('accountNo')
+    .trim()
+    .notEmpty()
+    .isNumeric()
+    .isLength({ min: 10, max: 10 }),
+  body('bankName')
     .notEmpty()
     .isString()
     .trim()

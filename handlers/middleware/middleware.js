@@ -35,7 +35,7 @@ class Middleware {
     }
   }
 
-  static async checkUserType(req, res, next) {
+  static async transporterOnly(req, res, next) {
     const userType = req.user.userType
     if(userType !== 'transporter') {
       return errorResponse(

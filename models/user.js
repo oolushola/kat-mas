@@ -28,7 +28,8 @@ const userSchema = new Schema({
   accountDetails: {
     bankName: { type: String },
     accountNo: { type: String },
-    accountName: { type: String }
+    accountName: { type: String },
+    sameAsName: { type: String }
   },
   guarantor: {
     firstName: { type: String },
