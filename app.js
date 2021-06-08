@@ -3,16 +3,22 @@ const bodyParser = require('body-parser')
 const routes = require('./routes/routes')
 const mongoose = require('mongoose')
 const path = require('path')
-const dotenv = require('dotenv')
-dotenv.config()
+const dotenv = require('dotenv').config()
 
 const app = express()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/public/users', express.static(path.join(__dirname, 'public/users')))
+app.use('/public/documents/nin', express.static(path.join(__dirname, 'public/documents/nin')))
+app.use('/public/documents/poa', express.static(path.join(__dirname, 'public/documents/poa')))
+app.use('/public/documents/guarantor', express.static(path.join(__dirname, 'public/documents/guarantor')))
+
 app.use(express.static(path.join(__dirname, 'public/images')))
 app.use(express.static(path.join(__dirname, 'public/users')))
+app.use(express.static(path.join(__dirname, 'public/documents/nin')))
+app.use(express.static(path.join(__dirname, 'public/documents/poa')))
+app.use(express.static(path.join(__dirname, 'public/documents/guarantor')))
 
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -28,7 +34,6 @@ app.use('*', (req, res, next) => {
     response: 'resource not found'
   })
 })
-
 
 mongoose.connect(process.env.CONNECTION_STRING, {
   useNewUrlParser: true,

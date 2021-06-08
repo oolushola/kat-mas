@@ -28,14 +28,17 @@ const userSchema = new Schema({
   accountDetails: {
     bankName: { type: String },
     accountNo: { type: String },
-    accountName: { type: String }
+    accountName: { type: String },
+    sameAsName: { type: String }
   },
   guarantor: {
     firstName: { type: String },
     lastName: { type: String },
     email: { type: String },
     phoneNo: [],
-    address: { type: String }
+    address: { type: String },
+    occupation: { type: String },
+    workAddress: { type: String }
   },
   nextOfKin: {
     firstName: { type: String },
@@ -43,19 +46,16 @@ const userSchema = new Schema({
     email: { type: String },
     phoneNo: [],
     address: { type: String },
-    occupation: { type: String },
-    workAddress: { type: String },
-
   },
   userType: {
-    type: Number,
-    enum:[1, 2, 3],
-    default: 1
+    type: String,
+    enum:["customer", "transporter", "business"],
+    required: true
   },
   documents: {
     nin: { type: String },
     proofOfAddress: { type: String },
-    gurantorProofOfId: { type: String },
+    guarantorProofOfId: { type: String },
     guarantorWorkId: { type: String }
 
   },
