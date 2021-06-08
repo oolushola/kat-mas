@@ -1,39 +1,38 @@
 const express = require('express')
+const { body } = require('express-validator')
 const userController = require('../controllers/userController')
 const Middleware = require('../handlers/middleware/middleware')
 const Validate = require('../handlers/validator/userValidator')
+const SupportingDocumentController = require('../controllers/supportingDocumentController')
 
 const router = express.Router()
 
 router.patch(
-  '/guarantor',
+  '/nin',
   Middleware.checkAuth,
   Middleware.transporterOnly,
-  Validate.GUARANTOR,
-  userController.guarantorUpdate
+  SupportingDocumentController.uploadNin
 )
 
 router.patch(
-  '/next-of-kin',
+  '/proof-of-address',
   Middleware.checkAuth,
   Middleware.transporterOnly,
-  Validate.NEXT_OF_KIN,
-  userController.nextOfKinUpdate
+  SupportingDocumentController.uploadProofOfAddress
 )
 
 router.patch(
-  '/upload/photo',
+  '/guarantor-id',
   Middleware.checkAuth,
-  userController.uploadPhoto
+  Middleware.transporterOnly,
+  SupportingDocumentController.uploadGurantorProofOfId
 )
 
 router.patch(
-  '/account-details',
+  '/guarantor-work-id',
   Middleware.checkAuth,
   Middleware.transporterOnly,
-  Validate.ACCOUNT_DETAILS,
-  userController.accountDetails
+  SupportingDocumentController.uploadGuarantorWorkId
 )
-
 
 module.exports = router

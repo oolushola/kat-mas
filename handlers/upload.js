@@ -38,12 +38,21 @@ exports.UPLOAD_PROFILE_PHOTO = multer({
     fileSize: 532480
 }}).single('photo')
 
+exports.UPLOAD_SINGLE_PHOTO = (directory, fieldName, callback) => {
+  callback(
+    multer({ 
+      storage:storage(directory) 
+    }).single(fieldName)
+  )
+}
+
+
 exports.DELETE_PHOTO = (photoLink) => {
   const photoPath = path.join(__dirname, '..')
   return fs.unlink(photoPath+'/'+photoLink, (err) => {
     if(err) {
       return 'Error: '+err.message
     }
-    console.log('photo updated')
+    return true
   })
 }

@@ -1,7 +1,6 @@
 const { validationResult } = require('express-validator')
 const userModel = require('../models/user')
 const { errorResponse, successResponse } = require('../handlers/response')
-const file = require('../handlers/upload')
 
 class User {
   static async guarantorUpdate(req, res, next) {

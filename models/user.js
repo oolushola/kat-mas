@@ -55,7 +55,7 @@ const userSchema = new Schema({
   documents: {
     nin: { type: String },
     proofOfAddress: { type: String },
-    gurantorProofOfId: { type: String },
+    guarantorProofOfId: { type: String },
     guarantorWorkId: { type: String }
 
   },
