@@ -31,17 +31,14 @@ const IMAGE_ONLY_FILTER = (req, file, cb) => {
   }
 }
 
-exports.UPLOAD_PROFILE_PHOTO = multer({ 
-  storage: storage('public/users'), 
-  fileFilter : IMAGE_ONLY_FILTER, 
-  limits: {
-    fileSize: 532480
-}}).single('photo')
-
-exports.UPLOAD_SINGLE_PHOTO = (directory, fieldName, callback) => {
-  callback(
+exports.UPLOAD_SINGLE_PHOTO = (directory, fieldName, cb) => {
+  cb(
     multer({ 
-      storage:storage(directory) 
+      storage:storage(directory),
+      fileFilter: IMAGE_ONLY_FILTER,
+      limits: {
+        fileSize: 532480
+      }
     }).single(fieldName)
   )
 }
