@@ -1,6 +1,7 @@
 const { validationResult } = require('express-validator')
 const userModel = require('../models/user')
 const { errorResponse, successResponse } = require('../handlers/response')
+const file = require('../handlers/upload')
 
 class User {
   static async guarantorUpdate(req, res, next) {
@@ -78,35 +79,37 @@ class User {
   }
 
   static uploadPhoto(req, res, next) {
-    file.UPLOAD_PROFILE_PHOTO(req, res, async (err) => {
-      if(err) {
-        return errorResponse(
-          res, 422, 'image upload error. maximum of 520KB allowed', err.message
-        )
-      }
-      try{
-        const photo = req.file   
-        if(!photo) {
-          errorResponse(
-            res, 422, 'no photo choosen'
+    file.UPLOAD_SINGLE_PHOTO('public/users', 'photo', (multer) => {
+      multer(req, res, async (err) => {
+        if(err) {
+          return errorResponse(
+            res, 422, 'image upload error. maximum of 520KB allowed', err.message
           )
         }
-        const user = await userModel.findById(req.user._id)
-        user.photo ? file.DELETE_PHOTO(user.photo) : null
-        user.photo = req.file.path
-        const result =  await user.save()
-        successResponse(
-          res, 200, 'photo uploaded', {
-            name: `${result.firstName} ${result.lastName}`,
-            photo: result.photo
+        try{
+          const photo = req.file   
+          if(!photo) {
+            errorResponse(
+              res, 422, 'no photo choosen'
+            )
           }
-        )
-      }
-      catch(err) {
-        errorResponse(
-          res, 500, 'internal server error', err.message
-        )
-      }
+          const user = await userModel.findById(req.user._id)
+          user.photo ? file.DELETE_PHOTO(user.photo) : null
+          user.photo = req.file.path
+          const result =  await user.save()
+          successResponse(
+            res, 200, 'photo uploaded', {
+              name: `${result.firstName} ${result.lastName}`,
+              photo: result.photo
+            }
+          )
+        }
+        catch(err) {
+          errorResponse(
+            res, 500, 'internal server error', err.message
+          )
+        }
+      })
     })
   }
 
