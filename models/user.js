@@ -49,7 +49,7 @@ const userSchema = new Schema({
   },
   userType: {
     type: String,
-    enum:["customer", "transporter", "business"],
+    enum:["transporter", "business", "admin"],
     required: true
   },
   documents: {
@@ -57,12 +57,26 @@ const userSchema = new Schema({
     proofOfAddress: { type: String },
     guarantorProofOfId: { type: String },
     guarantorWorkId: { type: String }
-
   },
   transporterAttestation: {
     type: Boolean,
     default: false
-  }
+  },
+  businessCategory: {
+    type: String,
+    enum: ["customer", "b2b"]
+  },
+  adminStatus: {
+    isAdmin: {
+      type: Boolean,
+      default: false,
+    },
+    adminCategory: {
+      type: String,
+      enum: ["superAdmin", "admin", "hr", "ops", "transport", "finance", "fieldOps"]
+    }
+  },
+  
 
 }, { timestamps: true })
 

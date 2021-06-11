@@ -19,7 +19,11 @@ class Middleware {
           res, 401, 'invalid signature token', null
         )
       }
-      const foundUser = await userModel.findOne({ _id: verifyToken.id }).select('userType email _id ')
+      const foundUser = await (
+        userModel
+          .findOne({ _id: verifyToken.id })
+          .select('userType email _id adminStatus ')
+      )
       if(!foundUser) {
         return errorResponse(
           res, 404, 'user not found', null
@@ -35,15 +39,33 @@ class Middleware {
     }
   }
 
-  static async transporterOnly(req, res, next) {
-    const userType = req.user.userType
-    if(userType !== 'transporter') {
-      return errorResponse(
-        res, 403, 'you are not authorized', null
-      )
-    }
-    next()
+  static async isTransporter(req, res, next) {
+    userFilter(req.user.userType, res, 'transporter', next)
+  }
+
+  static isAdmin(req, res, next) {    
+    adminFilter(req.user.adminStatus.adminCategory, res, 'admin', 'superAdmin', next)
   }
 }
+
+
+const userFilter = (userType, res, status, next) => {
+  if(userType !== status) {
+    return errorResponse(
+      res, 403, 'you are not authorized', null
+    )
+  }
+  next()
+}
+
+const adminFilter = (userType, res, midLevel, topTier, next) => {
+  if(userType === topTier || userType === midLevel) {
+    return next()
+  }
+  errorResponse(
+    res, 403, 'you are not authorized', null
+  )
+}
+
 
 module.exports = Middleware
