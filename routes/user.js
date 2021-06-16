@@ -8,7 +8,7 @@ const router = express.Router()
 router.patch(
   '/guarantor',
   Middleware.checkAuth,
-  Middleware.transporterOnly,
+  Middleware.isTransporter,
   Validate.GUARANTOR,
   userController.guarantorUpdate
 )
@@ -16,7 +16,7 @@ router.patch(
 router.patch(
   '/next-of-kin',
   Middleware.checkAuth,
-  Middleware.transporterOnly,
+  Middleware.isTransporter,
   Validate.NEXT_OF_KIN,
   userController.nextOfKinUpdate
 )
@@ -30,7 +30,7 @@ router.patch(
 router.patch(
   '/account-details',
   Middleware.checkAuth,
-  Middleware.transporterOnly,
+  Middleware.isTransporter,
   Validate.ACCOUNT_DETAILS,
   userController.accountDetails
 )
