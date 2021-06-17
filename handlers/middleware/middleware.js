@@ -46,8 +46,15 @@ class Middleware {
   static isAdmin(req, res, next) {    
     adminFilter(req.user.adminStatus.adminCategory, res, 'admin', 'superAdmin', next)
   }
-}
 
+  static isSuperAdmin(req, res, next) {
+    userFilter(req.user.adminStatus.adminCategory, res, 'superAdmin', next)
+  }
+
+  static isStaff(req, res, next) {
+    staffFilter(req.user.adminStatus.adminCategory, res, next)
+  }
+}
 
 const userFilter = (userType, res, status, next) => {
   if(userType !== status) {
@@ -60,6 +67,21 @@ const userFilter = (userType, res, status, next) => {
 
 const adminFilter = (userType, res, midLevel, topTier, next) => {
   if(userType === topTier || userType === midLevel) {
+    return next()
+  }
+  errorResponse(
+    res, 403, 'you are not authorized', null
+  )
+}
+
+const staffFilter = (adminCategory, res, next) => {
+  if(
+    adminCategory === "admin" ||
+    adminCategory === "superAdmin" ||
+    adminCategory === "ops" || 
+    adminCategory === "finance" || 
+    adminCategory === "transport" || 
+    adminCategory === "fieldOps") {
     return next()
   }
   errorResponse(
