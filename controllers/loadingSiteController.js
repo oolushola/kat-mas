@@ -34,32 +34,29 @@ class loadingSite {
     }
     catch(err) {
         errorResponse(
-        res, 400, 'client side error', err.message
+          res, 500, 'internal server error', err.message
         )
     }
   }
 
   static async loadingSiteFetchAll (req, res, next) {
     try{
-      await loadingSiteModel.find()
-      .select("_id loadingSite description createdAt updatedAt")
-      .then((docs) => {
-        const result = {
-          count: docs.length,
-          loadingSites: docs,
-        };
-        successResponse(
-          res,
-          201,
-          {
-            sites: result
-          }
+      const loadingSite = await loadingSiteModel.find()
+      .select("-__v")
+      if (!loadingSite) {
+        return errorResponse(
+          res, 404, 'resource not found'
         )
-      })
+      }
+      successResponse(
+        res,
+        201,
+        loadingSite
+      )
     }
     catch(err) {
       errorResponse(
-      res, 400, 'client side error', err.message
+        res, 500, 'internal server error', err.message
       )
     }
   }
@@ -67,22 +64,22 @@ class loadingSite {
 
   static async loadingSiteFetch (req, res, next) {
     try{
-      await loadingSiteModel.findById(req.params.siteId)
-      .select("_id loadingSite description createdAt updatedAt")
-      .then((docs) => {
-        if(!docs) {
-          return Promise.reject('invalid loading site')          
-        }
-        successResponse(
-          res,
-          201,
-          docs
-        )
-      })
+      const loadingSite = await loadingSiteModel.findById(req.params.siteId)
+      .select("-__v")
+      if(!loadingSite) {
+        return errorResponse(
+          res, 404, 'resource not found'
+        )        
+      }
+      successResponse(
+        res,
+        201,
+        loadingSite
+      )
     }
     catch(err) {
       errorResponse(
-      res, 400, 'client side error', err.message
+        res, 500, 'internal server error', err.message
       )
     }
   }
@@ -90,50 +87,49 @@ class loadingSite {
 
   static async loadingSiteEdit (req, res, next) {
     try {
-      await loadingSiteModel.findById(req.params.siteId)
-      .then((site) => {
-        if(!site) {
-          return Promise.reject('invalid loading site')          
-        }
-        const { loadingSite, description } = req.body
-        site.loadingSite = loadingSite
-        site.description = description
-        site.save()
-        successResponse(
-          res,
-          200,
-          'loading site updated', {
-            site
-          }
+      const site = await loadingSiteModel.findById(req.params.siteId)
+      if(!site) {
+        return errorResponse(
+          res, 404, 'resource not found'
         )
-      })
+      }
+      const { loadingSite, description } = req.body
+      site.loadingSite = loadingSite
+      site.description = description
+      const update = await site.save()
+      successResponse(
+        res,
+        200,
+        'loading site updated', {
+          update
+        }
+      )
     }
     catch(err) {
       errorResponse(
-      res, 400, 'client side error', err.message
+        res, 500, 'internal server error', err.message
       )
     }
   }
 
   static async loadingSiteDelete (req, res, next) {
     try{
-      await loadingSiteModel.findById(req.params.siteId)
-      .then((docs) => {
-        if(!docs) {
-          return Promise.reject('invalid loading site')          
-        }
-        docs.delete()
-        successResponse(
-          res,
-          201,
-        'loading site deleted',
-          {docs}
-        )
-      })
+      const loadingSite = await loadingSiteModel.findById(req.params.siteId)
+      if(!loadingSite) {
+        return errorResponse(
+          res, 404, 'resource not found'
+        )          
+      }
+      await loadingSite.delete()
+      successResponse(
+        res,
+        201,
+      'loading site deleted'
+      )
     }
     catch(err) {
       errorResponse(
-      res, 400, 'client side error', err.message
+        res, 500, 'internal server error', err.message
       )
     }
   }
