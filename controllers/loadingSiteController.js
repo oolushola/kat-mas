@@ -14,9 +14,9 @@ class loadingSite {
     try {
         const {
           loadingSite,
-          description,
-          createdBy
+          description
         } = req.body
+        const createdBy = req.user.id
         const site = new loadingSiteModel({
             loadingSite,
             description,
@@ -116,14 +116,15 @@ class loadingSite {
     try{
       const loadingSite = await loadingSiteModel.findById(req.params.siteId)
       if(loadingSite) {
-          res, 404, 'resource not found'          
+        return errorResponse(
+          res, 404, 'resource not found'   
+        )       
       }
       await loadingSite.delete()
       successResponse(
         res,
         201,
       'loading site deleted',
-
       )
     }
     catch(err) {
