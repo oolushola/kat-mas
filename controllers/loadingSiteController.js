@@ -43,7 +43,7 @@ class loadingSite {
     try{
       const loadingSite = await loadingSiteModel.find()
       .select("-__v")
-      if (!loadingSite) {
+      if (loadingSite.length <= 0) {
         return errorResponse(
           res, 404, 'resource not found'
         )
@@ -115,16 +115,15 @@ class loadingSite {
   static async loadingSiteDelete (req, res, next) {
     try{
       const loadingSite = await loadingSiteModel.findById(req.params.siteId)
-      if(!loadingSite) {
-        return errorResponse(
-          res, 404, 'resource not found'
-        )          
+      if(loadingSite) {
+          res, 404, 'resource not found'          
       }
       await loadingSite.delete()
       successResponse(
         res,
         201,
-      'loading site deleted'
+      'loading site deleted',
+
       )
     }
     catch(err) {
