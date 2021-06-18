@@ -1,7 +1,7 @@
 const express = require('express')
 const { body } = require('express-validator')
 const Middleware = require('../handlers/middleware/middleware')
-const Validate = require('../handlers/validator/loadingSite-validator')
+const Validate = require('../handlers/validator/loadingSite')
 const loadingSiteController = require('../controllers/loadingSiteController')
 
 

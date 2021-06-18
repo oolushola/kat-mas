@@ -20,14 +20,5 @@ exports.CREATE = [
     .isString()
     .trim()
     .toLowerCase()
-    .optional(),
-    body('createdby')
-    .custom((value, { req }) => {
-      return userModel.findOne({ _id: value })
-        .then(result => {
-          if(!result) {
-            return Promise.reject('user does not exist')          
-          }
-        })
-    })
+    .optional()
 ]
