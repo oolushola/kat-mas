@@ -15,14 +15,12 @@ class trucks {
                 truckNo,
                 tonnage,
                 transporterId,
-                moves
             } = req.body
             const createdBy = req.user.id
             const newTruck = new trucksModel({
                 truckNo,
                 tonnage,
                 transporterId,
-                moves,
                 createdBy
             })
             const result = await newTruck.save()
@@ -110,12 +108,10 @@ class trucks {
                 truckNo,
                 tonnage,
                 transporterId,
-                moves
             } = req.body
             docs.truckNo = truckNo
             docs.tonnage = tonnage
             docs.transporterId = transporterId
-            docs.moves = moves
             const update = await docs.save()
             successResponse(
                 res,
