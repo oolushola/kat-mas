@@ -40,19 +40,7 @@ exports.CREATE = [
                 return Promise.reject('resource not found')
             }
         })
-    }),
-    body('completed')
-    .optional()
-    .isNumeric()
-    .trim(),
-    body('allocated')
-    .optional()
-    .isNumeric()
-    .trim(),
-    body('cancelled')
-    .optional()
-    .isNumeric()
-    .trim()
+    })
 ]
 
 exports.UPDATE = [
@@ -92,14 +80,5 @@ exports.UPDATE = [
                 return Promise.reject('resource not found')
             }
         })
-    }),
-    body('completed')
-    .isNumeric()
-    .trim(),
-    body('allocated')
-    .isNumeric()
-    .trim(),
-    body('cancelled')
-    .isNumeric()
-    .trim()
+    })
 ]
