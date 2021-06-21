@@ -1,4 +1,5 @@
 const truckTypeModel = require('../models/truckType')
+const userModel = require('../models/user')
 const { validationResult} = require('express-validator')
 const { errorResponse, successResponse } = require('../handlers/response')
 
@@ -46,6 +47,7 @@ class truckType {
         try{
             const truckType = await truckTypeModel.find()
             .select("-__v")
+            .populate('createdBy', 'firstName lastName email')
             if(truckType.length <= 0) {
                 return errorResponse(
                     res, 404, 'resource not found'
@@ -67,6 +69,7 @@ class truckType {
         try{
             const truckType = await truckTypeModel.findById(req.params.truckTypeId)
             .select("-__v")
+            .populate('createdBy', 'firstName lastName email')
             if(!truckType) {
                 return errorResponse (
                     res, '404', 'resource not found'

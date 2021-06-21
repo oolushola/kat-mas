@@ -19,7 +19,7 @@ exports.CREATE = [
     }),
     body('tonnage')
     .trim()
-    .isString()
+    .isMongoId()
     .notEmpty()
     .custom((value, {req}) => {
         return tonnageModel.findOne({_id: value})
@@ -31,7 +31,7 @@ exports.CREATE = [
     }),
     body('transporterId')
     .trim()
-    .isString()
+    .isMongoId()
     .notEmpty()
     .custom((value, {req}) => {
         return userModel.findOne({_id: value, userType: 'transporter'})
@@ -71,7 +71,7 @@ exports.UPDATE = [
     }),
     body('tonnage')
     .trim()
-    .isString()
+    .isMongoId()
     .notEmpty()
     .custom((value, {req}) => {
         return tonnageModel.findOne({_id: value})
@@ -83,7 +83,7 @@ exports.UPDATE = [
     }),
     body('transporterId')
     .trim()
-    .isString()
+    .isMongoId()
     .notEmpty()
     .custom((value, {req}) => {
         return userModel.findOne({_id: value, userType: 'transporter'})
@@ -94,15 +94,12 @@ exports.UPDATE = [
         })
     }),
     body('completed')
-    .optional()
     .isNumeric()
     .trim(),
     body('allocated')
-    .optional()
     .isNumeric()
     .trim(),
     body('cancelled')
-    .optional()
     .isNumeric()
     .trim()
 ]

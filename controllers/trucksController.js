@@ -47,6 +47,8 @@ class trucks {
         try{
             const trucks = await trucksModel.find()
             .select("-__v")
+            .populate('tonnage transporterId createdBy', 'firstName lastName email tonnage')
+            
             if(trucks.length <= 0) {
                 return errorResponse(
                     res, 404, 'resource not found'
@@ -70,6 +72,7 @@ class trucks {
         try{
             const truck = await trucksModel.findById(req.params.truckId)
             .select("-__v")
+            .populate('tonnage transporterId createdBy', 'firstName lastName email tonnage')
             if(!truck) {
                 return errorResponse(
                     res, 404, 'resource not found'

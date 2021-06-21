@@ -9,11 +9,13 @@ const trucksSchema = new Schema({
 
     tonnage: {
         required: true,
+        ref: 'Tonnage',
         type: Schema.Types.ObjectId
     },
 
     transporterId: {
         required: true,
+        ref: 'User',
         type: Schema.Types.ObjectId
     },
 
@@ -36,6 +38,7 @@ const trucksSchema = new Schema({
 
     createdBy: {
         required: true,
+        ref: 'User',
         type: Schema.Types.ObjectId
     }
 }, { timestamps: true }
