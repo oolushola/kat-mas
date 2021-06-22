@@ -18,6 +18,6 @@ const truckTypeSchema = new Schema ({
     }
 }, {timestamps: true} )
 
-const truckTypeModel = mongoose.model('truckType', truckTypeSchema)
+const truckTypeModel = mongoose.model('TruckType', truckTypeSchema)
 
 module.exports = truckTypeModel
