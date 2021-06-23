@@ -9,6 +9,7 @@ const productRoute = require('./product')
 const truckTypeRoute = require('./truckType')
 const trucksRoute = require('./trucks')
 const availableCargoRoute = require('./availableCargo')
+const invoiceSubheadingRoute = require('./invoiceSubheading')
 
 router.use('/auth', authRoute)
 router.use('/user', userRoute)
@@ -19,5 +20,6 @@ router.use('/product', productRoute)
 router.use('/truck-type', truckTypeRoute)
 router.use('/trucks', trucksRoute)
 router.use('/available-cargo', availableCargoRoute)
+router.use('/invoice-subheading', invoiceSubheadingRoute)
 
 module.exports = router
