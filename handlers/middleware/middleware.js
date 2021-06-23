@@ -54,6 +54,10 @@ class Middleware {
   static isStaff(req, res, next) {
     staffFilter(req.user.adminStatus.adminCategory, res, next)
   }
+
+  static isAdminAndOps(req, res, next) {
+    adminAndOpsFilter(req.user.adminStatus.adminCategory, res, next)
+  }
 }
 
 const userFilter = (userType, res, status, next) => {
@@ -87,6 +91,20 @@ const staffFilter = (adminCategory, res, next) => {
   errorResponse(
     res, 403, 'you are not authorized', null
   )
+}
+
+const adminAndOpsFilter = (adminCategory, res, next) => {
+  if(
+    adminCategory === "admin" ||
+    adminCategory === "superAdmin" ||
+    adminCategory === "ops" ||
+    adminCategory === "fieldOps"
+  ) {
+      return next()
+    }
+    errorResponse(
+      res, 403, 'you are not authorized', null
+    )
 }
 
 

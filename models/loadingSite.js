@@ -16,6 +16,6 @@ const loadingSiteSchema = new Schema({
     }
 }, { timestamps: true })
 
-const loadingSiteModel = mongoose.model('loadingSite', loadingSiteSchema)
+const loadingSiteModel = mongoose.model('LoadingSite', loadingSiteSchema)
 
 module.exports = loadingSiteModel
