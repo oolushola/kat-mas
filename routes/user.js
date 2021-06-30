@@ -2,6 +2,7 @@ const express = require('express')
 const userController = require('../controllers/userController')
 const Middleware = require('../handlers/middleware/middleware')
 const Validate = require('../handlers/validator/userValidator')
+const AssignmentController = require('../controllers/userAssignmentController')
 
 const router = express.Router()
 
@@ -33,6 +34,29 @@ router.patch(
   Middleware.isTransporter,
   Validate.ACCOUNT_DETAILS,
   userController.accountDetails
+)
+
+router.patch(
+  '/products',
+  Middleware.checkAuth,
+  Middleware.isAdmin,
+  Validate.ASSIGN_PRODUCTS,
+  AssignmentController.assignProducts
+)
+
+router.patch(
+  '/loading-site',
+  Middleware.checkAuth,
+  Middleware.isAdmin,
+  Validate.ASSIGN_LOADING_SITES,
+  AssignmentController.assignLoadingSites
+)
+
+router.get(
+  '/business',
+  Middleware.checkAuth,
+  Middleware.isAdmin,
+  AssignmentController.getBusinessDetails
 )
 
 

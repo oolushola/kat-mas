@@ -7,7 +7,7 @@ const router = express.Router()
 
 
 router.post(
-    '/create',
+    '/product',
     Middleware.checkAuth,
     Middleware.isAdmin,
     Validate.CREATE,
@@ -15,28 +15,28 @@ router.post(
 )
 
 router.get(
-    '/fetch-all',
+    '/products',
     Middleware.checkAuth,
     Middleware.isStaff,
     productController.productFetchAll
 )
 
 router.get(
-    '/fetch/:productId',
+    '/product/:productId',
     Middleware.checkAuth,
     Middleware.isStaff,
     productController.productFetchOne
 )
 
 router.patch(
-    '/edit/:productId',
+    '/product/:productId',
     Middleware.checkAuth,
     Middleware.isAdmin,
     productController.productEdit
 )
 
 router.delete(
-    '/delete/:productId',
+    '/product/:productId',
     Middleware.checkAuth,
     Middleware.isSuperAdmin,
     productController.productDelete

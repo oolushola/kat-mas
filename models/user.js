@@ -76,8 +76,18 @@ const userSchema = new Schema({
       enum: ["superAdmin", "admin", "hr", "ops", "transport", "finance", "fieldOps"]
     }
   },
-  
-
+  assigned:{
+    products: [{
+      required: true,
+      type: Schema.Types.ObjectId,
+      ref: 'Product'
+    }],
+    loadingSites: [{
+      required: true,
+      type: Schema.Types.ObjectId,
+      ref: 'LoadingSite'
+    }]
+  }
 }, { timestamps: true })
 
 const userModel = mongoose.model('User', userSchema)

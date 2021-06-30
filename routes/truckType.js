@@ -6,7 +6,7 @@ const truckTypeController = require('../controllers/truckTypeController')
 const router = express.Router()
 
 router.post(
-    '/create',
+    '/truck-type',
     Middleware.checkAuth,
     Middleware.isAdmin,
     Validate.CREATE,
@@ -14,21 +14,21 @@ router.post(
 )
 
 router.get(
-    '/fetch-all',
+    '/truck-types',
     Middleware.checkAuth,
     Middleware.isStaff,
     truckTypeController.truckTypeFetchAll
 )
 
 router.get(
-    '/fetch/:truckTypeId',
+    '/truck-type/:truckTypeId',
     Middleware.checkAuth,
     Middleware.isStaff,
     truckTypeController.truckTypeFetchOne
 )
 
 router.patch(
-    '/edit/:truckTypeId',
+    '/truck-type/:truckTypeId',
     Middleware.checkAuth,
     Middleware.isAdmin,
     Validate.UPDATE,
@@ -36,7 +36,7 @@ router.patch(
 )
 
 router.delete(
-    '/delete/:truckTypeId',
+    '/truck-type/:truckTypeId',
     Middleware.checkAuth,
     Middleware.isSuperAdmin,
     truckTypeController.truckTypeDelete
