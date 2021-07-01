@@ -59,5 +59,13 @@ router.get(
   AssignmentController.getBusinessDetails
 )
 
+router.delete(
+  '/products',
+  Middleware.checkAuth,
+  Middleware.isAdmin,
+  Validate.ASSIGN_PRODUCTS,
+  AssignmentController.removeProducts
+)
+
 
 module.exports = router

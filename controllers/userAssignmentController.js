@@ -12,8 +12,9 @@ class AssignmentController {
     }
     const { clientId, products } = req.body
     try {
-      userAssignment(
-        res, clientId, `products`, products, 'product'
+      console.log(req.ip)
+      assign(
+        res, clientId, `products`, products, 'product added', 'ASSIGN'
       )
     }
     catch(err) {
@@ -32,7 +33,7 @@ class AssignmentController {
     }
     const { clientId, loadingSites } = req.body
     try {
-      userAssignment(res, clientId, `loadingSites`, loadingSites, 'loading site')
+      assign(res, clientId, `loadingSites`, loadingSites, 'loading site added', 'ASSIGN')
     }
     catch(err) {
       errorResponse(
@@ -64,22 +65,61 @@ class AssignmentController {
       )
     }
   }
+
+  static async removeProducts(req, res, next) {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+      return errorResponse(
+        res, 422, 'validation failed', errors.mapped()
+      )
+    }
+    const { clientId, products } = req.body
+    try {
+      assign(res, clientId, `products`, products, 'product removed', 'REMOVE')
+    }
+    catch(err) {
+      errorResponse(
+        res, 500, 'internal server error', err.message
+      )
+    }
+  }
+
+  static async removeLoadingSites(req, res, next) {
+    const errors = validationResult(req)
+    if(!errors.isEmpty()) {
+      return errorResponse(
+        res, 422, 'validation failed', errors.mapped()
+      )
+    }
+    const { clientId, loadingSites } = req.body
+    try {
+      assign(res, clientId, `loadingSites`, loadingSites, 'loading sites removed', 'REMOVE')
+    }
+    catch(err) {
+      errorResponse(
+        res, 500, 'internal server error', err.message
+      )
+    }
+  }
 }
 
-const userAssignment = async (res, client, params, arrayValues, label) => {
+const assign = async (res, client, params, arrayValues, label, determinant) => {
   const clientInfo = await userModel.findById(client).select('-__v -password')
   const existingParams = clientInfo.assigned[params]
   arrayValues.map(assignValue => {
     const paramIndex = existingParams.findIndex(exisitingParam => (
       exisitingParam == assignValue
     ))
-    if(paramIndex < 0) {
+    if(paramIndex < 0 && determinant === 'ASSIGN') {
       existingParams.push(assignValue)
+    }
+    if(paramIndex >= 0 && determinant === 'REMOVE') {
+      existingParams.splice(paramIndex, 1)
     }
   })
   const result = await clientInfo.save()
   successResponse(
-    res, 200, `${label} added`, result
+    res, 200, `${label}`, result
   )
 }
 
