@@ -7,7 +7,7 @@ const trucksController = require('../controllers/trucksController')
 
 
 router.post(
-    '/create',
+    '/truck',
     Middleware.checkAuth,
     Middleware.isAdmin,
     Validate.CREATE,
@@ -15,26 +15,26 @@ router.post(
 )
 
 router.get(
-    '/fetch-all',
+    '/trucks',
     Middleware.checkAuth,
     Middleware.isStaff,
     trucksController.truckFetchAll)
 
 router.get(
-    '/fetch/:truckId',
+    '/truck/:truckId',
     Middleware.checkAuth,
     Middleware.isStaff,
     trucksController.truckFetchOne)
 
 router.patch(
-    '/edit/:truckId',
+    '/truck/:truckId',
     Middleware.checkAuth,
     Middleware.isAdmin,
     Validate.UPDATE,
     trucksController.truckEdit)
 
 router.delete(
-    '/delete/:truckId',
+    '/truck/:truckId',
     Middleware.checkAuth,
     Middleware.isSuperAdmin,
     trucksController.truckDelete

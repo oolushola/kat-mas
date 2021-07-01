@@ -7,7 +7,7 @@ const availableCargoController = require('../controllers/availableCargoControlle
 
 
 router.post(
-    '/create',
+    '/available-cargo',
     Middleware.checkAuth,
     Middleware.isAdminAndOps,
     Validate.CREATE,
@@ -15,21 +15,21 @@ router.post(
 )
 
 router.get(
-    '/fetch-all',
+    '/available-cargos',
     Middleware.checkAuth,
     Middleware.isAdminAndOps,
     availableCargoController.availableCargoFetchAll
 )
 
 router.get(
-    '/fetch/:cargoId',
+    '/available-cargo/:cargoId',
     Middleware.checkAuth,
     Middleware.isAdminAndOps,
     availableCargoController.availableCargoFetchOne
 )
 
 router.patch(
-    '/edit/:cargoId',
+    '/available-cargo/:cargoId',
     Middleware.checkAuth,
     Middleware.isAdminAndOps,
     Validate.UPDATE,
@@ -37,7 +37,7 @@ router.patch(
 )
 
 router.delete(
-    '/delete/:cargoId',
+    '/available-cargo/:cargoId',
     Middleware.checkAuth,
     Middleware.isSuperAdmin,
     availableCargoController.availableCargoDelete

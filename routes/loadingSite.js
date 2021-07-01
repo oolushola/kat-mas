@@ -8,7 +8,7 @@ const loadingSiteController = require('../controllers/loadingSiteController')
 const router = express.Router()
 
 router.post(
-    '/create',
+    '/loading-site',
     Middleware.checkAuth,
     Middleware.isAdmin,
     Validate.CREATE,
@@ -16,28 +16,28 @@ router.post(
 )
 
 router.get(
-    '/fetch-all',
+    '/loading-sites',
     Middleware.checkAuth,
     Middleware.isStaff,
     loadingSiteController.loadingSiteFetchAll
 )
 
 router.get(
-    '/fetch/:siteId',
+    '/loading-site/:siteId',
     Middleware.checkAuth,
     Middleware.isStaff,
     loadingSiteController.loadingSiteFetch
 )
 
 router.patch(
-    '/edit/:siteId',
+    'loading-site/:siteId',
     Middleware.checkAuth,
     Middleware.isAdmin,
     loadingSiteController.loadingSiteEdit
 )
 
 router.delete(
-    '/delete/:siteId',
+    '/loading-site/:siteId',
     Middleware.checkAuth,
     Middleware.isSuperAdmin,
     loadingSiteController.loadingSiteDelete
