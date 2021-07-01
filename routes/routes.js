@@ -14,12 +14,16 @@ const invoiceSubheadingRoute = require('./invoiceSubheading')
 router.use('/auth', authRoute)
 router.use('/user', userRoute)
 router.use('/upload/supporting-documents', supportingDocumentRoute)
-router.use('/loading-site', loadingSiteRoute)
-router.use(tonnageRoute)
-router.use('/product', productRoute)
-router.use('/truck-type', truckTypeRoute)
-router.use('/trucks', trucksRoute)
-router.use('/available-cargo', availableCargoRoute)
-router.use('/invoice-subheading', invoiceSubheadingRoute)
+
+router.use(
+  tonnageRoute, 
+  loadingSiteRoute, 
+  productRoute, 
+  truckTypeRoute, 
+  trucksRoute, 
+  availableCargoRoute,
+  invoiceSubheadingRoute
+)
 
 module.exports = router
+

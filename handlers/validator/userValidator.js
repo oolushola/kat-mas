@@ -87,6 +87,42 @@ exports.ACCOUNT_DETAILS = [
     .toLowerCase(),
 ]
 
+exports.ASSIGN_PRODUCTS = [
+  body('clientId')
+    .isMongoId()
+    .trim()
+    .notEmpty()
+    .custom((value, { req }) => {
+      return userModel.findOne({ _id: value }).then(user => {
+        if(user.userType !== 'business') {
+          return Promise.reject('invalid user category')
+        }
+      }) 
+    }),
+  body('products')
+    .isArray()
+    .isLength({ min: 1 })
+    .notEmpty()
+]
+
+exports.ASSIGN_LOADING_SITES = [
+  body('clientId')
+    .isMongoId()
+    .trim()
+    .notEmpty()
+    .custom((value, { req }) => {
+      return userModel.findOne({ _id: value }).then(user => {
+        if(user.userType !== 'business') {
+          return Promise.reject('invalid user category')
+        }
+      }) 
+    }),
+  body('loadingSites')
+    .isArray()
+    .isLength({ min: 1 })
+    .notEmpty()
+]
+
 
 
 
